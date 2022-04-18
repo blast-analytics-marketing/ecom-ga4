@@ -420,17 +420,12 @@ export const trackPromotionClick = (id, name, creative, position) => {
 /**
  * Send the navigation click, page data
  */
-export const trackNavigationClick = (linkName) => {
+export const trackNavigationClick = (link_name) => {
   return {
     type: TRACK_NAVIGATION_CLICK,
     payload: {
-      event: "loadEventData",
-      eventCategory: 'Navigation',
-      eventAction: 'Click',
-      eventLabel: linkName,
-      nonInteractive: false,
-      customMetrics: {},
-      customVariables: {},
+      event: "navigation_click",
+      link_name
     },
   }
 }
@@ -438,17 +433,11 @@ export const trackNavigationClick = (linkName) => {
 /**
  * Send the login, page data
  */
-export const trackLogin = (linkName) => {
+export const trackLogin = () => {
   return {
     type: TRACK_LOGIN,
     payload: {
-      event: "loadEventData",
-      eventCategory: 'Account',
-      eventAction: 'Login',
-      eventLabel: undefined,
-      nonInteractive: true,
-      customMetrics: {},
-      customVariables: {},
+      event: "login",
     },
   }
 }
