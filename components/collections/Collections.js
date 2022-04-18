@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import ProductCard from '../products/ProductCard';
 import {
   doViewItemList,
-  productClick
+  selectItem
 } from '../../store/actions/analyticsActions';
 
 class Collections extends Component {
@@ -25,7 +25,7 @@ class Collections extends Component {
 
     this.handleScroll = this.handleScroll.bind(this);
     this.handleViewItemList = this.handleViewItemList.bind(this);
-    this.sendProductClick = this.sendProductClick.bind(this);
+    this.sendSelectItem = this.sendSelectItem.bind(this);
   }
 
   componentDidMount() {
@@ -76,9 +76,9 @@ class Collections extends Component {
     })
   }
 
-  sendProductClick(id, position) {
+  sendSelectItem(id, position) {
     const products = this.props.products.filter(prod => prod.id === id);
-    this.props.dispatch(productClick(products, position, this.state.list))
+    this.props.dispatch(selectItem(products, position, this.state.list))
   }
 
   renderSidebar() {
@@ -154,7 +154,7 @@ class Collections extends Component {
                       description={product.description && product.description.replace(reg, '')}
                       soldOut={product.is.sold_out}
                       position={this.state.concatProducts.map(({id}) => id).indexOf(product.id)}
-                      productClick={this.sendProductClick}
+                      selectItem={this.sendSelectItem}
                     />
                   </div>
                 ))}

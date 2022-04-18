@@ -1,7 +1,7 @@
 import {
   VIRTUAL_PAGE_VIEW,
   VIEW_ITEM_LIST,
-  PRODUCT_CLICK,
+  SELECT_ITEM,
   PRODUCT_DETAIL_VIEW,
   TRACK_ADD_TO_CART,
   TRACK_REMOVE_FROM_CART,
@@ -81,9 +81,9 @@ export const doViewItemList = (products, list) => (dispatch) => {
 
 
 /**
- * Send the productClick, product data
+ * Send the select item, product data
  */
-export const productClick = (products, position, list) => {
+export const selectItem = (products, position, list) => {
   const ecomObj =  {
     items: []
   };
@@ -111,7 +111,7 @@ export const productClick = (products, position, list) => {
     return prod;
   });
   return {
-    type: PRODUCT_CLICK,
+    type: SELECT_ITEM,
     payload: {
       event: "select_item",
       ecommerce: ecomObj,

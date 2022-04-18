@@ -4,7 +4,7 @@ import ProductRow from '../products/ProductRow';
 import { connect } from 'react-redux';
 import {
   doViewItemList,
-  productClick
+  selectItem
 } from '../../store/actions/analyticsActions';
 
 class SuggestedProducts extends Component {
@@ -18,7 +18,7 @@ class SuggestedProducts extends Component {
       }
     }
     this.handleViewItemList = this.handleViewItemList.bind(this);
-    this.sendProductClick = this.sendProductClick.bind(this)
+    this.sendSelectItem = this.sendSelectItem.bind(this)
   }
   componentDidMount() {
     if(this.props.products.length > 0) {
@@ -34,9 +34,9 @@ class SuggestedProducts extends Component {
     this.props.dispatch(doViewItemList(this.props.products.slice(0,4), this.state.list))
       .then(() => this.setState({viewItemListFired: true}));
   }
-  sendProductClick(id, position) {
+  sendSelectItem(id, position) {
     const products = this.props.products.filter(prod => prod.id === id);
-    this.props.dispatch(productClick(products, position, this.state.list))
+    this.props.dispatch(selectItem(products, position, this.state.list))
   }
   render() {
     const { products } = this.props;
@@ -54,7 +54,7 @@ class SuggestedProducts extends Component {
             You may also like to check out these products.
           </p>
         </div>
-        <ProductRow products={products.slice(0, 4)} productClick={this.sendProductClick}/>
+        <ProductRow products={products.slice(0, 4)} selectItem={this.sendSelectItem}/>
       </div>
     );
   }
