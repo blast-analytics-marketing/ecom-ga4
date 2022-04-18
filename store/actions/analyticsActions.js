@@ -24,7 +24,7 @@ export const virtualPageView = (pageProps) => {
   return {
     type: VIRTUAL_PAGE_VIEW,
     payload: {
-      event: "virtualPageView",
+      event: "virtual_page_view",
       page: pageProps,
     },
   }
@@ -35,10 +35,9 @@ export const virtualPageView = (pageProps) => {
  */
 export const productImpressions = (products, list) => {
   const ecomObj =  {
-    currencyCode: "USD",
-    impressions: []
+    items: []
   };
-  ecomObj.impressions = products.map((
+  ecomObj.items = products.map((
     {
       name,
       id,
@@ -48,28 +47,25 @@ export const productImpressions = (products, list) => {
     },
     index
   ) => {
-    return {
-      name,
-      id,
-      price: parseFloat(price.formatted),
-      brand: "Blast",
-      category: categories.map(cat => cat.name).sort().join(','),
-      variant: `${variant_groups[0]?.name}: ${variant_groups[0]?.options[0]?.name}`,
-      list,
-      position: index + 1
-    }
+    const prod =  {
+      item_id: id,
+      item_name: name,
+      currency: 'USD',
+      index,
+      item_brand: "Blast",
+      item_price: parseFloat(price.formatted),
+      item_variant: `${variant_groups[0]?.name}: ${variant_groups[0]?.options[0]?.name}`,
+      item_list_id: list.id,
+      item_list_name: list.name,
+    };
+    categories.forEach((cat, i) => prod[i > 0 ? `item_category${i+1}` : 'item_category'] = cat.name);
+    return prod;
   });
   return {
     type: PRODUCT_IMPRESSIONS,
     payload: {
-      event: "productImpressions",
-      eventCategory: 'Enhanced Ecommerce',
-      eventAction: 'Product Impressions',
-      eventLabel: undefined,
-      nonInteractive: true,
+      event: "view_item_list",
       ecommerce: ecomObj,
-      customMetrics: {},
-      customVariables: {},
     },
   }
 }

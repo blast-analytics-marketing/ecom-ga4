@@ -150,7 +150,7 @@ const analyticsMiddleware = () => next => action => {
       break;
     case "SET_CUSTOMER":
       sendEvents({
-        event: "loadUserData",
+        event: "load_user_data",
         user: {
           userID: payload.id,
           loggedIn: payload.isLoggedIn,
@@ -160,7 +160,7 @@ const analyticsMiddleware = () => next => action => {
       break;
     case "CLEAR_CUSTOMER":
       sendEvents({
-        event: "loadUserData",
+        event: "load_user_data",
         user: {
           loggedIn: false,
         },

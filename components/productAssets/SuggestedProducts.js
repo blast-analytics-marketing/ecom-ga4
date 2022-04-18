@@ -11,8 +11,11 @@ class SuggestedProducts extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      productListName: 'Suggested Products',
-      productImpressionsFired: false
+      productImpressionsFired: false,
+      list: {
+        name: 'Suggested Products',
+        id: 'suggested-products'
+      }
     }
     this.handleProductImpressions = this.handleProductImpressions.bind(this);
     this.sendProductClick = this.sendProductClick.bind(this)
@@ -28,12 +31,12 @@ class SuggestedProducts extends Component {
     }
   }
   handleProductImpressions() {
-    this.props.dispatch(doProductImpressions(this.props.products.slice(0,4), this.state.productListName))
+    this.props.dispatch(doProductImpressions(this.props.products.slice(0,4), this.state.list))
       .then(() => this.setState({productImpressionsFired: true}));
   }
   sendProductClick(id, name, position) {
     const products = this.props.products.filter(prod => prod.id === id);
-    this.props.dispatch(productClick(products, position, name, 'Suggested Products'))
+    this.props.dispatch(productClick(products, position, name, this.state.list))
   }
   render() {
     const { products } = this.props;

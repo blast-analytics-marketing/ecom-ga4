@@ -13,7 +13,10 @@ class ProductsBanner extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      productListName: 'PLP: Homepage Products',
+      list: {
+        name: 'PLP: Homepage Products',
+        id:'plp-homepage-products'
+      },
       productImpressionsFired: false
     }
     this.handleProductImpressions = this.handleProductImpressions.bind(this);
@@ -30,12 +33,12 @@ class ProductsBanner extends Component {
     }
   }
   handleProductImpressions() {
-    this.props.dispatch(doProductImpressions(this.props.products.slice(0,4), this.state.productListName))
+    this.props.dispatch(doProductImpressions(this.props.products.slice(0,4), this.state.list))
       .then(() => this.setState({productImpressionsFired: true}));
   }
   sendProductClick(id, name, position) {
     const products = this.props.products.filter(prod => prod.id === id);
-    this.props.dispatch(productClick(products, position, name, this.state.productListName))
+    this.props.dispatch(productClick(products, position, name, this.state.list))
   }
   render() {
     const { products } = this.props;

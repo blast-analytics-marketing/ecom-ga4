@@ -13,7 +13,11 @@ class Collections extends Component {
     super(props);
     this.state = {
       concatProducts: [],
-      productImpressionsFired: false
+      productImpressionsFired: false,
+      list: {
+        name: 'PLP: Shop All',
+        id: 'plp-shop-all'
+      }
     }
 
     this.sidebar = React.createRef();
@@ -67,14 +71,14 @@ class Collections extends Component {
         return this.filterProductsByCat(slug).map(prod => prod)
       }))
     }, () => {
-      this.props.dispatch(doProductImpressions(this.state.concatProducts, 'PLP: Shop All'))
+      this.props.dispatch(doProductImpressions(this.state.concatProducts, this.state.list))
         .then(() => this.setState({productImpressionsFired: true}));
     })
   }
 
   sendProductClick(id, name, position) {
     const products = this.props.products.filter(prod => prod.id === id);
-    this.props.dispatch(productClick(products, position, name, 'PLP: Shop All'))
+    this.props.dispatch(productClick(products, position, name, this.state.list))
   }
 
   renderSidebar() {
