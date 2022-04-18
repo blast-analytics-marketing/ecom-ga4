@@ -6,8 +6,8 @@ import {
   TRACK_ADD_TO_CART,
   TRACK_REMOVE_FROM_CART,
   TRACK_VIEW_CART,
-  TRACK_CHECKOUT_SHIPPING_PAYMENT,
-  TRACK_CHECKOUT_OPTION,
+  TRACK_ADD_SHIPPING_INFO,
+  TRACK_ADD_PAYMENT_INFO,
   TRACK_PURCHASE,
   TRACK_VIEW_PROMOTION,
   TRACK_SELECT_PROMOTION,
@@ -257,20 +257,16 @@ export const trackViewCart = (products, cart_id) => {
 }
 
 /**
- * Send the checkout shipping payment, product data
+ * Send the add shipping info, product data
  */
-export const trackCheckoutShippingPayment = (products, cartId) => {
+export const trackAddShippingInfo = (products, cart_id, shipping_tier) => {
+  const { description, price } = shipping_tier;
   const ecomObj =  {
-    currencyCode: "USD",
-    checkout: {
-      actionField: {
-        step: 2,
-        cartId
-      },
-      products: [],
-    }
+    shipping_tier: `${description} - ${price.formatted_with_code}`,
+    cart_id,
+    items: []
   };
-  ecomObj.checkout.products = products.map((
+  ecomObj.items = products.map((
     {
       name,
       id,
@@ -280,57 +276,62 @@ export const trackCheckoutShippingPayment = (products, cartId) => {
       selected_options,
     }
   ) => {
-    return {
-      name,
-      id,
+    const prod =  {
+      item_id: id,
+      item_name: name,
+      currency: 'USD',
+      item_brand: "Blast",
       price: parseFloat(price.formatted),
-      quantity,
-      brand: "Blast",
-      category: categories.map(cat => cat.name).sort().join(','),
-      variant: selected_options.map(({group_name, option_name}) => `${group_name}: ${option_name}`).sort().join(),
-    }
+      item_variant: selected_options.map(({group_name, option_name}) => `${group_name}: ${option_name}`).sort().join(),
+      quantity
+    };
+    categories.forEach((cat, i) => prod[i > 0 ? `item_category${i+1}` : 'item_category'] = cat.name);
+    return prod;
   });
   return {
-    type: TRACK_CHECKOUT_SHIPPING_PAYMENT,
+    type: TRACK_ADD_SHIPPING_INFO,
     payload: {
-      event: "checkout",
-      eventCategory: 'Enhanced Ecommerce',
-      eventAction: 'Checkout',
-      eventLabel: undefined,
-      nonInteractive: true,
+      event: "add_shipping_info",
       ecommerce: ecomObj,
-      customMetrics: {},
-      customVariables: {},
     },
   }
 }
 
 /**
- * Send the checkout option, product data
+ * Send the add payment info, product data
  */
-export const trackCheckoutOption = (option, cartId) => {
-  const { description, price } = option;
+export const trackAddPaymentInfo = (products, cart_id) => {
   const ecomObj =  {
-    currencyCode: "USD",
-    checkout: {
-      actionField: {
-        step: 2,
-        option: `${description} - ${price.formatted_with_code}`,
-        cartId,
-      },
-    }
+    cart_id,
+    items: []
   };
+  ecomObj.items = products.map((
+    {
+      name,
+      id,
+      price,
+      quantity,
+      categories,
+      selected_options,
+    }
+  ) => {
+    const prod =  {
+      item_id: id,
+      item_name: name,
+      currency: 'USD',
+      item_brand: "Blast",
+      price: parseFloat(price.formatted),
+      item_variant: selected_options.map(({group_name, option_name}) => `${group_name}: ${option_name}`).sort().join(),
+      quantity
+    };
+    categories.forEach((cat, i) => prod[i > 0 ? `item_category${i+1}` : 'item_category'] = cat.name);
+    return prod;
+  });
   return {
-    type: TRACK_CHECKOUT_OPTION,
+    type: TRACK_ADD_PAYMENT_INFO,
     payload: {
-      event: "checkout",
-      eventCategory: 'Enhanced Ecommerce',
-      eventAction: 'Checkout Option',
-      eventLabel: `${description} - ${price.formatted_with_code}`,
-      nonInteractive: false,
+      event: "add_payment_info",
       ecommerce: ecomObj,
-      customMetrics: {},
-      customVariables: {},
     },
   }
 }
@@ -339,7 +340,6 @@ export const trackCheckoutOption = (option, cartId) => {
  * Send the purchase, product data
  */
 export const trackPurchase = (products, orderReceipt) => {
-  console.log(orderReceipt)
   const ecomObj =  {
     currency: 'USD',
     value: parseFloat(orderReceipt.order_value.formatted),

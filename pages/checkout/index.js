@@ -22,8 +22,8 @@ import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
 import { CardElement, Elements, ElementsConsumer } from '@stripe/react-stripe-js';
 import {
-  trackCheckoutShippingPayment as dispatchTrackCheckoutShippingPayment,
-  trackCheckoutOption as dispatchTrackCheckoutOption,
+  trackAddShippingInfo as dispatchTrackAddShippingInfo,
+  trackAddPaymentInfo as dispatchTrackAddPaymentInfo,
 } from '../../store/actions/analyticsActions';
 
 const billingOptions = ['Same as shipping Address', 'Use a different billing address'];
@@ -108,15 +108,6 @@ class CheckoutPage extends Component {
     if (this.props.cart && this.props.cart.total_items === 0) {
       this.redirectOutOfCheckout()
     }
-    if(this.props.products.length > 0) {
-      const fullProdData = this.props.cart.line_items.map(({product_id, quantity, selected_options}) => {
-        let product = this.props.products.find(({id}) => id === product_id)
-        product.quantity = quantity;
-        product.selected_options = selected_options;
-        return product;
-      });
-      this.props.dispatchTrackCheckoutShippingPayment(fullProdData, this.props.cart.id);
-    }
 
     this.updateCustomerFromRedux();
     // on initial mount generate checkout token object from the cart,
@@ -134,17 +125,6 @@ class CheckoutPage extends Component {
       // regenerate checkout token object since cart has been updated
       this.generateToken();
     }
-
-    if(prevProps.products !== this.props.products) {
-      const fullProdData = this.props.cart.line_items.map(({product_id, quantity, selected_options}) => {
-        let product = this.props.products.find(({id}) => id === product_id)
-        product.quantity = quantity;
-        product.selected_options = selected_options;
-        return product;
-      });
-      this.props.dispatchTrackCheckoutShippingPayment(fullProdData, this.props.cart.id);
-    }
-
     if (this.props.customer && !prevProps.customer) {
       this.updateCustomerFromRedux();
     }
@@ -175,8 +155,14 @@ class CheckoutPage extends Component {
         this.state['shipping[country]'],
         this.state['shipping[region]']
       );
+      const fullProdData = this.props.cart.line_items.map(({product_id, quantity, selected_options}) => {
+        let product = this.props.products.find(({id}) => id === product_id)
+        product.quantity = quantity;
+        product.selected_options = selected_options;
+        return product;
+      });
       const trackedOption = this.props.shippingOptions.find(({id}) => id === this.state['fulfillment[shipping_method]']);
-      this.props.dispatchTrackCheckoutOption(trackedOption, this.props.cart.id);
+      this.props.dispatchTrackAddShippingInfo(fullProdData, this.props.cart.id, trackedOption);
     }
   }
 
@@ -356,6 +342,16 @@ class CheckoutPage extends Component {
    */
   captureOrder(e) {
     e.preventDefault();
+
+    if(this.props.products.length > 0) {
+      const fullProdData = this.props.cart.line_items.map(({product_id, quantity, selected_options}) => {
+        let product = this.props.products.find(({id}) => id === product_id)
+        product.quantity = quantity;
+        product.selected_options = selected_options;
+        return product;
+      });
+      this.props.dispatchTrackAddPaymentInfo(fullProdData, this.props.cart.id);
+    }
 
     // reset error states
     this.setState({
@@ -906,8 +902,8 @@ export default withRouter(
       dispatchSetShippingOptionsInCheckout,
       dispatchSetDiscountCodeInCheckout,
       dispatchCaptureOrder,
-      dispatchTrackCheckoutShippingPayment,
-      dispatchTrackCheckoutOption,
+      dispatchTrackAddShippingInfo,
+      dispatchTrackAddPaymentInfo,
     },
   )(InjectedCheckoutPage),
 );
