@@ -6,7 +6,7 @@ import CartItem from '../cart/CartItem';
 import { connect } from 'react-redux';
 // Cart redux action creators
 import { retrieveCart as dispatchRetreiveCart } from '../../store/actions/cartActions';
-import { trackCheckoutCart as dispatchTrackCheckoutCart } from '../../store/actions/analyticsActions';
+import { trackViewCart as dispatchTrackViewCart } from '../../store/actions/analyticsActions';
 
 const duration = 300;
 
@@ -58,7 +58,7 @@ class Cart extends Component {
         product.selected_options = selected_options;
         return product;
       });
-      this.props.dispatchTrackCheckoutCart(fullProdData, this.props.cart.id);
+      this.props.dispatchTrackViewCart(fullProdData, this.props.cart.id);
     } catch(err) {
       console.error(err);
     }
@@ -178,5 +178,5 @@ class Cart extends Component {
 
 export default connect(state => state, {
   dispatchRetreiveCart,
-  dispatchTrackCheckoutCart,
+  dispatchTrackViewCart,
 })(Cart);

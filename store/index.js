@@ -139,7 +139,7 @@ const analyticsMiddleware = () => next => action => {
     case "TRACK_VIEW_ITEM":
     case "TRACK_ADD_TO_CART":
     case "TRACK_REMOVE_FROM_CART":
-    case "TRACK_CHECKOUT_CART":
+    case "TRACK_VIEW_CART":
     case "TRACK_CHECKOUT_SHIPPING_PAYMENT":
     case "TRACK_CHECKOUT_OPTION":
     case "TRACK_PURCHASE":

@@ -5,7 +5,7 @@ import {
   TRACK_VIEW_ITEM,
   TRACK_ADD_TO_CART,
   TRACK_REMOVE_FROM_CART,
-  TRACK_CHECKOUT_CART,
+  TRACK_VIEW_CART,
   TRACK_CHECKOUT_SHIPPING_PAYMENT,
   TRACK_CHECKOUT_OPTION,
   TRACK_PURCHASE,
@@ -218,20 +218,14 @@ export const trackRemoveFromCart = (product, quantity, selected_options) => {
 }
 
 /**
- * Send the checkout cart, product data
+ * Send the view cart, product data
  */
-export const trackCheckoutCart = (products, cartId) => {
+export const trackViewCart = (products, cart_id) => {
   const ecomObj =  {
-    currencyCode: "USD",
-    checkout: {
-      actionField: {
-        step: 1,
-        cartId,
-      },
-      products: [],
-    }
+    cart_id,
+    items: []
   };
-  ecomObj.checkout.products = products.map((
+  ecomObj.items = products.map((
     {
       name,
       id,
@@ -241,27 +235,23 @@ export const trackCheckoutCart = (products, cartId) => {
       selected_options,
     }
   ) => {
-    return {
-      name,
-      id,
+    const prod =  {
+      item_id: id,
+      item_name: name,
+      currency: 'USD',
+      item_brand: "Blast",
       price: parseFloat(price.formatted),
-      quantity,
-      brand: "Blast",
-      category: categories.map(cat => cat.name).sort().join(','),
-      variant: selected_options.map(({group_name, option_name}) => `${group_name}: ${option_name}`).sort().join(),
-    }
+      item_variant: selected_options.map(({group_name, option_name}) => `${group_name}: ${option_name}`).sort().join(),
+      quantity
+    };
+    categories.forEach((cat, i) => prod[i > 0 ? `item_category${i+1}` : 'item_category'] = cat.name);
+    return prod;
   });
   return {
-    type: TRACK_CHECKOUT_CART,
+    type: TRACK_VIEW_CART,
     payload: {
-      event: "checkout",
-      eventCategory: 'Enhanced Ecommerce',
-      eventAction: 'Checkout',
-      eventLabel: undefined,
-      nonInteractive: true,
+      event: "view_cart",
       ecommerce: ecomObj,
-      customMetrics: {},
-      customVariables: {},
     },
   }
 }
