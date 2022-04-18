@@ -83,7 +83,6 @@ const MyApp = ({Component, pageProps}) => {
     });
 
   }, [store])
-  console.log(store.getState())
   return (
     <Provider store={store}>
       <Component
