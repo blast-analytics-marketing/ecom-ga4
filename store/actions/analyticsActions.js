@@ -181,7 +181,7 @@ export const trackAddToCart = (product, quantity, selected_options) => {
   categories.forEach((cat, i) => prod[i > 0 ? `item_category${i+1}` : 'item_category'] = cat.name);
   ecomObj.items.push(prod);
   return {
-    type: PRODUCT_DETAIL_VIEW,
+    type: TRACK_ADD_TO_CART,
     payload: {
       event: "add_to_cart",
       ecommerce: ecomObj,
@@ -195,31 +195,24 @@ export const trackAddToCart = (product, quantity, selected_options) => {
 export const trackRemoveFromCart = (product, quantity, selected_options) => {
   const { name, id, price, categories } = product;
   const ecomObj =  {
-    currencyCode: "USD",
-    remove: {
-      products: [],
-    }
+    items: []
   };
-  ecomObj.remove.products.push({
-    name,
-    id,
+  const prod = {
+    item_id: id,
+    item_name: name,
+    currency: 'USD',
+    item_brand: "Blast",
     price: parseFloat(price.formatted),
-    brand: "Blast",
-    category: categories.map(cat => cat.name).sort().join(','),
-    variant: selected_options.map(({group_name, option_name}) => `${group_name}: ${option_name}`).sort().join(),
-    quantity,
-  });
+    item_variant: selected_options.map(({group_name, option_name}) => `${group_name}: ${option_name}`).sort().join(),
+    quantity
+  };
+  categories.forEach((cat, i) => prod[i > 0 ? `item_category${i+1}` : 'item_category'] = cat.name);
+  ecomObj.items.push(prod);
   return {
     type: TRACK_REMOVE_FROM_CART,
     payload: {
-      event: "removeFromCart",
-      eventCategory: 'Enhanced Ecommerce',
-      eventAction: 'Remove from Cart',
-      eventLabel: name,
-      nonInteractive: false,
+      event: "remove_from_cart",
       ecommerce: ecomObj,
-      customMetrics: {},
-      customVariables: {},
     },
   }
 }
