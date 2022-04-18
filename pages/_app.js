@@ -75,7 +75,15 @@ const MyApp = ({Component, pageProps}) => {
       })
     });
 
+    commerce.merchants.about().then((res) => {
+      store.dispatch({
+        type: 'STORE_MERCHANT',
+        payload: res
+      })
+    });
+
   }, [store])
+  console.log(store.getState())
   return (
     <Provider store={store}>
       <Component
