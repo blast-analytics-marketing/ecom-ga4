@@ -39,12 +39,14 @@ const MyApp = ({Component, pageProps}) => {
         page_name: 'View Order',
         page_category: 'Account',
         page_url: router.pathname,
+        page_title: 'View Order | Blast Analytics | Store',
       };
     } else {
       pageData = {
         page_name: pageProps.page || null,
         page_category: pageProps.category || null,
         page_url: router.pathname,
+        page_title: pageProps.title,
       };
     }
     store.dispatch(virtualPageView(pageData))
