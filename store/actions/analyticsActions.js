@@ -6,6 +6,7 @@ import {
   TRACK_ADD_TO_CART,
   TRACK_REMOVE_FROM_CART,
   TRACK_VIEW_CART,
+  TRACK_BEGIN_CHECKOUT,
   TRACK_ADD_SHIPPING_INFO,
   TRACK_ADD_PAYMENT_INFO,
   TRACK_PURCHASE,
@@ -251,6 +252,45 @@ export const trackViewCart = (products, cart_id) => {
     type: TRACK_VIEW_CART,
     payload: {
       event: "view_cart",
+      ecommerce: ecomObj,
+    },
+  }
+}
+
+/**
+ * Send the begin checkout, product data
+ */
+export const trackBeginCheckout = (products, cart_id) => {
+  const ecomObj =  {
+    cart_id,
+    items: []
+  };
+  ecomObj.items = products.map((
+    {
+      name,
+      id,
+      price,
+      quantity,
+      categories,
+      selected_options,
+    }
+  ) => {
+    const prod =  {
+      item_id: id,
+      item_name: name,
+      currency: 'USD',
+      item_brand: "Blast",
+      price: parseFloat(price.formatted),
+      item_variant: selected_options.map(({group_name, option_name}) => `${group_name}: ${option_name}`).sort().join(),
+      quantity
+    };
+    categories.forEach((cat, i) => prod[i > 0 ? `item_category${i+1}` : 'item_category'] = cat.name);
+    return prod;
+  });
+  return {
+    type: TRACK_BEGIN_CHECKOUT,
+    payload: {
+      event: "begin_checkout",
       ecommerce: ecomObj,
     },
   }

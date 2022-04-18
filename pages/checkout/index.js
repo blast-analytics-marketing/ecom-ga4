@@ -22,6 +22,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'next/router';
 import { CardElement, Elements, ElementsConsumer } from '@stripe/react-stripe-js';
 import {
+  trackBeginCheckout as dispatchTrackBeginCheckout,
   trackAddShippingInfo as dispatchTrackAddShippingInfo,
   trackAddPaymentInfo as dispatchTrackAddPaymentInfo,
 } from '../../store/actions/analyticsActions';
@@ -108,6 +109,15 @@ class CheckoutPage extends Component {
     if (this.props.cart && this.props.cart.total_items === 0) {
       this.redirectOutOfCheckout()
     }
+    if(this.props.products.length > 0) {
+      const fullProdData = this.props.cart.line_items.map(({product_id, quantity, selected_options}) => {
+        let product = this.props.products.find(({id}) => id === product_id)
+        product.quantity = quantity;
+        product.selected_options = selected_options;
+        return product;
+      });
+      this.props.dispatchTrackBeginCheckout(fullProdData, this.props.cart.id);
+    }
 
     this.updateCustomerFromRedux();
     // on initial mount generate checkout token object from the cart,
@@ -125,6 +135,17 @@ class CheckoutPage extends Component {
       // regenerate checkout token object since cart has been updated
       this.generateToken();
     }
+
+    if(prevProps.products !== this.props.products) {
+      const fullProdData = this.props.cart.line_items.map(({product_id, quantity, selected_options}) => {
+        let product = this.props.products.find(({id}) => id === product_id)
+        product.quantity = quantity;
+        product.selected_options = selected_options;
+        return product;
+      });
+      this.props.dispatchTrackBeginCheckout(fullProdData, this.props.cart.id);
+    }
+
     if (this.props.customer && !prevProps.customer) {
       this.updateCustomerFromRedux();
     }
@@ -902,6 +923,7 @@ export default withRouter(
       dispatchSetShippingOptionsInCheckout,
       dispatchSetDiscountCodeInCheckout,
       dispatchCaptureOrder,
+      dispatchTrackBeginCheckout,
       dispatchTrackAddShippingInfo,
       dispatchTrackAddPaymentInfo,
     },
