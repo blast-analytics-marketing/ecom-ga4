@@ -339,25 +339,23 @@ export const trackCheckoutOption = (option, cartId) => {
  * Send the purchase, product data
  */
 export const trackPurchase = (products, orderReceipt) => {
+  console.log(orderReceipt)
   const ecomObj =  {
-    currencyCode: orderReceipt.currency.code,
-    purchase: {
-      actionField: {
-        id: orderReceipt.id,
-        affiliation: orderReceipt.merchant.business_name,
-        revenue: orderReceipt.order_value.formatted,
-        tax: orderReceipt.tax.amount.formatted,
-        shipping: orderReceipt.order.shipping.price.formatted,
-        coupon: orderReceipt.order.discount.code,
-        cartId: orderReceipt.cart_id,
-        paymentType: orderReceipt.transactions.map(trans => {
-          return trans.payment_source.brand
-        }).sort().join()
-      },
-      products: [],
-    }
+    currency: 'USD',
+    value: parseFloat(orderReceipt.order_value.formatted),
+    coupon: orderReceipt.order.discount.code,
+    payment_type: orderReceipt.transactions.map(trans => {
+      return trans.payment_source.brand
+    }).sort().join(),
+    shipping_tier: `${orderReceipt.order.shipping.description} - ${orderReceipt.order.shipping.price.formatted}`,
+    transaction_id: orderReceipt.id,
+    affiliation: orderReceipt.merchant.business_name,
+    tax: parseFloat(orderReceipt.tax.amount.formatted),
+    shipping: parseFloat(orderReceipt.order.shipping.price.formatted),
+    cart_id: orderReceipt.cart_id,
+    items: []
   };
-  ecomObj.purchase.products = products.map((
+  ecomObj.items = products.map((
     {
       name,
       id,
@@ -367,27 +365,23 @@ export const trackPurchase = (products, orderReceipt) => {
       selected_options,
     }
   ) => {
-    return {
-      name,
-      id,
+    const prod =  {
+      item_id: id,
+      item_name: name,
+      currency: 'USD',
+      item_brand: "Blast",
       price: parseFloat(price.formatted),
-      quantity,
-      brand: "Blast",
-      category: categories.map(cat => cat.name).sort().join(','),
-      variant: selected_options.map(({variant_name, option_name}) => `${variant_name}: ${option_name}`).sort().join(),
-    }
+      item_variant: selected_options.map(({group_name, option_name}) => `${group_name}: ${option_name}`).sort().join(),
+      quantity
+    };
+    categories.forEach((cat, i) => prod[i > 0 ? `item_category${i+1}` : 'item_category'] = cat.name);
+    return prod;
   });
   return {
     type: TRACK_PURCHASE,
     payload: {
       event: "purchase",
-      eventCategory: 'Enhanced Ecommerce',
-      eventAction: 'Purchase',
-      eventLabel: undefined,
-      nonInteractive: true,
       ecommerce: ecomObj,
-      customMetrics: {},
-      customVariables: {},
     },
   }
 }
