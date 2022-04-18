@@ -4,7 +4,7 @@ import ProductCard from '../products/ProductCard';
 
 class ProductRow extends Component {
   render() {
-    const { products, selectItem } = this.props;
+    const { products, handleSelectItem } = this.props;
     const reg = /(<([^>]+)>)/ig;
     return (
       <div className="row mb-5">
@@ -19,7 +19,7 @@ class ProductRow extends Component {
               description={product.description && product.description.replace(reg, '')}
               soldOut={product.is.sold_out}
               position={i}
-              selectItem={selectItem}
+              handleSelectItem={handleSelectItem}
             />
           </div>
         ))}

@@ -1,7 +1,7 @@
 import {
   VIRTUAL_PAGE_VIEW,
-  VIEW_ITEM_LIST,
-  SELECT_ITEM,
+  TRACK_VIEW_ITEM_LIST,
+  TRACK_SELECT_ITEM,
   TRACK_VIEW_ITEM,
   TRACK_ADD_TO_CART,
   TRACK_REMOVE_FROM_CART,
@@ -62,7 +62,7 @@ export const viewItemList = (products, list) => {
     return prod;
   });
   return {
-    type: VIEW_ITEM_LIST,
+    type: TRACK_VIEW_ITEM_LIST,
     payload: {
       event: "view_item_list",
       ecommerce: ecomObj,
@@ -74,7 +74,7 @@ export const viewItemList = (products, list) => {
  * A thunk for product impressions so that firing the action returns a promise.
  * We use this to sequence a state update in the collections component.
  */
-export const doViewItemList = (products, list) => (dispatch) => {
+export const trackViewItemList = (products, list) => (dispatch) => {
   dispatch(viewItemList(products, list));
   return Promise.resolve();
 };
@@ -83,7 +83,7 @@ export const doViewItemList = (products, list) => (dispatch) => {
 /**
  * Send the select item, product data
  */
-export const selectItem = (products, position, list) => {
+export const trackSelectItem = (products, position, list) => {
   const ecomObj =  {
     items: []
   };
@@ -111,7 +111,7 @@ export const selectItem = (products, position, list) => {
     return prod;
   });
   return {
-    type: SELECT_ITEM,
+    type: TRACK_SELECT_ITEM,
     payload: {
       event: "select_item",
       ecommerce: ecomObj,

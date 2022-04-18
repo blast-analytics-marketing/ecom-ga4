@@ -1,10 +1,10 @@
 import React from 'react';
 import Link from 'next/link';
 
-export default function ProductCard({ permalink, image, id, name, description, price, soldOut, position, selectItem}) {
+export default function ProductCard({ permalink, image, id, name, description, price, soldOut, position, handleSelectItem}) {
   return (
     <Link href="/product/[permalink]" as={`/product/${permalink}`}>
-      <a className="mb-5 d-block font-color-black cursor-pointer" onClick={() => selectItem(id, position)}>
+      <a className="mb-5 d-block font-color-black cursor-pointer" onClick={() => handleSelectItem(id, position)}>
         <div
           className="mb-3"
           style={{

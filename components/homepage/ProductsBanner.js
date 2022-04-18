@@ -4,8 +4,8 @@ import Link from 'next/link';
 import ProductRow from '../products/ProductRow';
 import { connect } from 'react-redux';
 import {
-  doViewItemList,
-  selectItem
+  trackViewItemList,
+  trackSelectItem
 } from '../../store/actions/analyticsActions';
 
 
@@ -20,7 +20,7 @@ class ProductsBanner extends Component {
       viewItemListFired: false
     }
     this.handleViewItemList = this.handleViewItemList.bind(this);
-    this.sendSelectItem = this.sendSelectItem.bind(this)
+    this.handleSelectItem = this.handleSelectItem.bind(this)
   }
   componentDidMount() {
     if(this.props.products.length > 0) {
@@ -33,12 +33,12 @@ class ProductsBanner extends Component {
     }
   }
   handleViewItemList() {
-    this.props.dispatch(doViewItemList(this.props.products.slice(0,4), this.state.list))
+    this.props.dispatch(trackViewItemList(this.props.products.slice(0,4), this.state.list))
       .then(() => this.setState({viewItemListFired: true}));
   }
-  sendSelectItem(id, position) {
+  handleSelectItem(id, position) {
     const products = this.props.products.filter(prod => prod.id === id);
-    this.props.dispatch(selectItem(products, position, this.state.list))
+    this.props.dispatch(trackSelectItem(products, position, this.state.list))
   }
   render() {
     const { products } = this.props;
@@ -62,7 +62,7 @@ class ProductsBanner extends Component {
             </a>
           </Link>
         </div>
-        <ProductRow products={products.slice(0, 4)} selectItem={this.sendSelectItem}/>
+        <ProductRow products={products.slice(0, 4)} handleSelectItem={this.handleSelectItem}/>
       </div>
     );
   }

@@ -4,8 +4,8 @@ import Head from 'next/head';
 import { connect } from 'react-redux';
 import ProductCard from '../products/ProductCard';
 import {
-  doViewItemList,
-  selectItem
+  trackViewItemList,
+  trackSelectItem
 } from '../../store/actions/analyticsActions';
 
 class Collections extends Component {
@@ -25,7 +25,7 @@ class Collections extends Component {
 
     this.handleScroll = this.handleScroll.bind(this);
     this.handleViewItemList = this.handleViewItemList.bind(this);
-    this.sendSelectItem = this.sendSelectItem.bind(this);
+    this.handleSelectItem = this.handleSelectItem.bind(this);
   }
 
   componentDidMount() {
@@ -71,14 +71,14 @@ class Collections extends Component {
         return this.filterProductsByCat(slug).map(prod => prod)
       }))
     }, () => {
-      this.props.dispatch(doViewItemList(this.state.concatProducts, this.state.list))
+      this.props.dispatch(trackViewItemList(this.state.concatProducts, this.state.list))
         .then(() => this.setState({viewItemListFired: true}));
     })
   }
 
-  sendSelectItem(id, position) {
+  handleSelectItem(id, position) {
     const products = this.props.products.filter(prod => prod.id === id);
-    this.props.dispatch(selectItem(products, position, this.state.list))
+    this.props.dispatch(trackSelectItem(products, position, this.state.list))
   }
 
   renderSidebar() {
@@ -154,7 +154,7 @@ class Collections extends Component {
                       description={product.description && product.description.replace(reg, '')}
                       soldOut={product.is.sold_out}
                       position={this.state.concatProducts.map(({id}) => id).indexOf(product.id)}
-                      selectItem={this.sendSelectItem}
+                      handleSelectItem={this.handleSelectItem}
                     />
                   </div>
                 ))}

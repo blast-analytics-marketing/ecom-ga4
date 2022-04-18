@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import ProductRow from '../products/ProductRow';
 import { connect } from 'react-redux';
 import {
-  doViewItemList,
-  selectItem
+  trackViewItemList,
+  trackSelectItem
 } from '../../store/actions/analyticsActions';
 
 class SuggestedProducts extends Component {
@@ -18,7 +18,7 @@ class SuggestedProducts extends Component {
       }
     }
     this.handleViewItemList = this.handleViewItemList.bind(this);
-    this.sendSelectItem = this.sendSelectItem.bind(this)
+    this.handleSelectItem = this.handleSelectItem.bind(this)
   }
   componentDidMount() {
     if(this.props.products.length > 0) {
@@ -31,12 +31,12 @@ class SuggestedProducts extends Component {
     }
   }
   handleViewItemList() {
-    this.props.dispatch(doViewItemList(this.props.products.slice(0,4), this.state.list))
+    this.props.dispatch(trackViewItemList(this.props.products.slice(0,4), this.state.list))
       .then(() => this.setState({viewItemListFired: true}));
   }
-  sendSelectItem(id, position) {
+  handleSelectItem(id, position) {
     const products = this.props.products.filter(prod => prod.id === id);
-    this.props.dispatch(selectItem(products, position, this.state.list))
+    this.props.dispatch(trackSelectItem(products, position, this.state.list))
   }
   render() {
     const { products } = this.props;
@@ -54,7 +54,7 @@ class SuggestedProducts extends Component {
             You may also like to check out these products.
           </p>
         </div>
-        <ProductRow products={products.slice(0, 4)} selectItem={this.sendSelectItem}/>
+        <ProductRow products={products.slice(0, 4)} handleSelectItem={this.handleSelectItem}/>
       </div>
     );
   }
