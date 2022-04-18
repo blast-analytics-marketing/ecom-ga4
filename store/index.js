@@ -152,8 +152,8 @@ const analyticsMiddleware = () => next => action => {
       sendEvents({
         event: "load_user_data",
         user: {
-          userID: payload.id,
-          loggedIn: payload.isLoggedIn,
+          user_id: payload.id,
+          logged_in: payload.isLoggedIn,
         },
         _clear: true,
       });
@@ -162,7 +162,7 @@ const analyticsMiddleware = () => next => action => {
       sendEvents({
         event: "load_user_data",
         user: {
-          loggedIn: false,
+          logged_in: false,
         },
         _clear: true,
       });
