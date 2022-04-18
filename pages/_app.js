@@ -36,15 +36,15 @@ const MyApp = ({Component, pageProps}) => {
     let pageData = {};
     if(/\/account\/\[id\]/.test(router.pathname)) {
       pageData = {
-        pageName: 'View Order',
-        pageCategory: 'Account',
-        pageUrl: router.pathname,
+        page_name: 'View Order',
+        page_category: 'Account',
+        page_url: router.pathname,
       };
     } else {
       pageData = {
-        pageName: pageProps.page || null,
-        pageCategory: pageProps.category || null,
-        pageUrl: router.pathname,
+        page_name: pageProps.page || null,
+        page_category: pageProps.category || null,
+        page_url: router.pathname,
       };
     }
     store.dispatch(virtualPageView(pageData))
