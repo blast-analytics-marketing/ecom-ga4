@@ -125,30 +125,23 @@ export const productClick = (products, position, list) => {
 export const productDetailView = (product) => {
   const { name, id, price, categories, variant_groups } = product;
   const ecomObj =  {
-    currencyCode: "USD",
-    detail: {
-      products: [],
-    }
+    items: []
   };
-  ecomObj.detail.products.push({
-    name,
-    id,
-    price: parseFloat(price.formatted),
-    brand: "Blast",
-    category: categories.map(cat => cat.name).sort().join(','),
-    variant: `${variant_groups[0]?.name}: ${variant_groups[0]?.options[0]?.name}`,
-  });
+  const prod = {
+    item_id: id,
+    item_name: name,
+    currency: 'USD',
+    item_brand: "Blast",
+    item_price: parseFloat(price.formatted),
+    item_variant: `${variant_groups[0]?.name}: ${variant_groups[0]?.options[0]?.name}`,
+  };
+  categories.forEach((cat, i) => prod[i > 0 ? `item_category${i+1}` : 'item_category'] = cat.name);
+  ecomObj.items.push(prod);
   return {
     type: PRODUCT_DETAIL_VIEW,
     payload: {
-      event: "productDetailView",
-      eventCategory: 'Enhanced Ecommerce',
-      eventAction: 'Product Detail View',
-      eventLabel: name,
-      nonInteractive: true,
+      event: "view_item",
       ecommerce: ecomObj,
-      customMetrics: {},
-      customVariables: {},
     },
   }
 }
