@@ -83,15 +83,11 @@ export const doProductImpressions = (products, list) => (dispatch) => {
 /**
  * Send the productClick, product data
  */
-export const productClick = (products, position, name, list) => {
+export const productClick = (products, position, list) => {
   const ecomObj =  {
-    currencyCode: "USD",
-    click: {
-      actionField: { list },
-      products: [],
-    }
+    items: []
   };
-  ecomObj.click.products = products.map((
+  ecomObj.items = products.map((
     {
       name,
       id,
@@ -100,27 +96,25 @@ export const productClick = (products, position, name, list) => {
       variant_groups,
     }
   ) => {
-    return {
-      name,
-      id,
-      price: parseFloat(price.formatted),
-      brand: "Blast",
-      category: categories.map(cat => cat.name).sort().join(','),
-      variant: `${variant_groups[0]?.name}: ${variant_groups[0]?.options[0]?.name}`,
-      position
-    }
+    const prod =  {
+      item_id: id,
+      item_name: name,
+      currency: 'USD',
+      index: position,
+      item_brand: "Blast",
+      item_price: parseFloat(price.formatted),
+      item_variant: `${variant_groups[0]?.name}: ${variant_groups[0]?.options[0]?.name}`,
+      item_list_id: list.id,
+      item_list_name: list.name,
+    };
+    categories.forEach((cat, i) => prod[i > 0 ? `item_category${i+1}` : 'item_category'] = cat.name);
+    return prod;
   });
   return {
     type: PRODUCT_CLICK,
     payload: {
-      event: "productClick",
-      eventCategory: 'Enhanced Ecommerce',
-      eventAction: 'Product Click',
-      eventLabel: name,
-      nonInteractive: false,
+      event: "select_item",
       ecommerce: ecomObj,
-      customMetrics: {},
-      customVariables: {},
     },
   }
 }

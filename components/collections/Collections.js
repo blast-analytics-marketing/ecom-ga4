@@ -76,9 +76,9 @@ class Collections extends Component {
     })
   }
 
-  sendProductClick(id, name, position) {
+  sendProductClick(id, position) {
     const products = this.props.products.filter(prod => prod.id === id);
-    this.props.dispatch(productClick(products, position, name, this.state.list))
+    this.props.dispatch(productClick(products, position, this.state.list))
   }
 
   renderSidebar() {
@@ -153,7 +153,7 @@ class Collections extends Component {
                       price={product.price.formatted_with_symbol}
                       description={product.description && product.description.replace(reg, '')}
                       soldOut={product.is.sold_out}
-                      position={this.state.concatProducts.map(({id}) => id).indexOf(product.id) + 1}
+                      position={this.state.concatProducts.map(({id}) => id).indexOf(product.id)}
                       productClick={this.sendProductClick}
                     />
                   </div>

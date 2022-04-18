@@ -34,9 +34,9 @@ class SuggestedProducts extends Component {
     this.props.dispatch(doProductImpressions(this.props.products.slice(0,4), this.state.list))
       .then(() => this.setState({productImpressionsFired: true}));
   }
-  sendProductClick(id, name, position) {
+  sendProductClick(id, position) {
     const products = this.props.products.filter(prod => prod.id === id);
-    this.props.dispatch(productClick(products, position, name, this.state.list))
+    this.props.dispatch(productClick(products, position, this.state.list))
   }
   render() {
     const { products } = this.props;

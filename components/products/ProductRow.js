@@ -18,7 +18,7 @@ class ProductRow extends Component {
               price={product.price.formatted_with_symbol}
               description={product.description && product.description.replace(reg, '')}
               soldOut={product.is.sold_out}
-              position={i+1}
+              position={i}
               productClick={productClick}
             />
           </div>
