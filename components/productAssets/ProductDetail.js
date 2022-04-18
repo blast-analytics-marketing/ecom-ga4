@@ -4,7 +4,7 @@ import VariantSelector from '../productAssets/VariantSelector';
 import { animateScroll as scroll } from 'react-scroll';
 import { connect } from 'react-redux';
 import { addToCart } from '../../store/actions/cartActions';
-import { productDetailView } from '../../store/actions/analyticsActions';
+import { trackViewItem } from '../../store/actions/analyticsActions';
 
 class ProductDetail extends Component {
   constructor(props) {
@@ -21,14 +21,14 @@ class ProductDetail extends Component {
 
   componentDidMount() {
     this.setSelectedOptions();
-    this.props.dispatch(productDetailView(this.props.product))
+    this.props.dispatch(trackViewItem(this.props.product))
   }
 
   componentDidUpdate(prevProps) {
     if (!prevProps.product || prevProps.product.id !== this.props.product.id) {
       // Product was changed, reset selected variant group options
       this.setSelectedOptions();
-      this.props.dispatch(productDetailView(this.props.product))
+      this.props.dispatch(trackViewItem(this.props.product))
     }
   }
 

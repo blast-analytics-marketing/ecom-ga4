@@ -136,7 +136,7 @@ const analyticsMiddleware = () => next => action => {
     case "VIRTUAL_PAGE_VIEW":
     case "VIEW_ITEM_LIST":
     case "SELECT_ITEM":
-    case "PRODUCT_DETAIL_VIEW":
+    case "TRACK_VIEW_ITEM":
     case "TRACK_ADD_TO_CART":
     case "TRACK_REMOVE_FROM_CART":
     case "TRACK_CHECKOUT_CART":

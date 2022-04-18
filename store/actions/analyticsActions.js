@@ -2,7 +2,7 @@ import {
   VIRTUAL_PAGE_VIEW,
   VIEW_ITEM_LIST,
   SELECT_ITEM,
-  PRODUCT_DETAIL_VIEW,
+  TRACK_VIEW_ITEM,
   TRACK_ADD_TO_CART,
   TRACK_REMOVE_FROM_CART,
   TRACK_CHECKOUT_CART,
@@ -120,9 +120,9 @@ export const selectItem = (products, position, list) => {
 }
 
 /**
- * Send the productDetailView, product data
+ * Send the view item, product data
  */
-export const productDetailView = (product) => {
+export const trackViewItem = (product) => {
   const { name, id, price, categories, variant_groups } = product;
   const ecomObj =  {
     items: []
@@ -138,7 +138,7 @@ export const productDetailView = (product) => {
   categories.forEach((cat, i) => prod[i > 0 ? `item_category${i+1}` : 'item_category'] = cat.name);
   ecomObj.items.push(prod);
   return {
-    type: PRODUCT_DETAIL_VIEW,
+    type: TRACK_VIEW_ITEM,
     payload: {
       event: "view_item",
       ecommerce: ecomObj,
