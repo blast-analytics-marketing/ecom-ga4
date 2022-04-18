@@ -1,7 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import { connect } from 'react-redux';
-import { trackPromotionClick as dispatchTrackPromotionClick} from '../../store/actions/analyticsActions';
+import { trackSelectPromotion as dispatchTrackSelectPromotion} from '../../store/actions/analyticsActions';
 
 function HomeBanner(props) {
   return (
@@ -16,7 +16,7 @@ function HomeBanner(props) {
         <Link href="/about">
           <a
             className="d-flex py-3 align-items-center font-color-black borderbottom border-color-black"
-            onClick={() => props.dispatchTrackPromotionClick('about', 'About Link', 'none', 'below-hero')}>
+            onClick={() => props.dispatchTrackSelectPromotion('about', 'About Link', 'none', 'below-hero')}>
             <p className="mr-3">Find out more</p>
             <img src="/icon/arrow-long-right.svg" />
           </a>
@@ -26,4 +26,4 @@ function HomeBanner(props) {
   );
 }
 
-export default connect(state => state, {dispatchTrackPromotionClick})(HomeBanner)
+export default connect(state => state, {dispatchTrackSelectPromotion})(HomeBanner)

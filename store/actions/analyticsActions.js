@@ -9,8 +9,8 @@ import {
   TRACK_CHECKOUT_SHIPPING_PAYMENT,
   TRACK_CHECKOUT_OPTION,
   TRACK_PURCHASE,
-  TRACK_PROMOTION_IMPRESSION,
-  TRACK_PROMOTION_CLICK,
+  TRACK_VIEW_PROMOTION,
+  TRACK_SELECT_PROMOTION,
   TRACK_NAVIGATION_CLICK,
   TRACK_LOGIN,
 } from './actionTypes';
@@ -387,25 +387,22 @@ export const trackPurchase = (products, orderReceipt) => {
 }
 
 /**
- * Send the promotion click, promotion data
+ * Send the select promotion, promotion data
  */
-export const trackPromotionClick = (id, name, creative, position) => {
+export const trackSelectPromotion = (promotion_id, promotion_name, creative_name, creative_slot) => {
   const ecomObj =  {
-    promoClick: {
-      promotions: [id, name, creative, position]
-    }
+    items: [{
+      promotion_id,
+      promotion_name,
+      creative_name,
+      creative_slot,
+    }]
   };
   return {
-    type: TRACK_PROMOTION_CLICK,
+    type: TRACK_SELECT_PROMOTION,
     payload: {
-      event: "promotionClick",
-      eventCategory: 'Enhanced Ecommerce',
-      eventAction: 'Promotion Click',
-      eventLabel: undefined,
-      nonInteractive: false,
+      event: "select_promotion",
       ecommerce: ecomObj,
-      customMetrics: {},
-      customVariables: {},
     },
   }
 }
