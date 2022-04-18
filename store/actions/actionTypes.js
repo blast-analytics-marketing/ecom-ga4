@@ -28,7 +28,7 @@ export const CLEAR_CUSTOMER = 'CLEAR_CUSTOMER';
 
 //Define analytics action types
 export const VIRTUAL_PAGE_VIEW = "VIRTUAL_PAGE_VIEW";
-export const PRODUCT_IMPRESSIONS = "PRODUCT_IMPRESSIONS";
+export const VIEW_ITEM_LIST = "VIEW_ITEM_LIST";
 export const PRODUCT_CLICK = "PRODUCT_CLICK";
 export const PRODUCT_DETAIL_VIEW = "PRODUCT_DETAIL_VIEW";
 export const TRACK_ADD_TO_CART = "TRACK_ADD_TO_CART";

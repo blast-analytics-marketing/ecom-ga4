@@ -4,7 +4,7 @@ import Link from 'next/link';
 import ProductRow from '../products/ProductRow';
 import { connect } from 'react-redux';
 import {
-  doProductImpressions,
+  doViewItemList,
   productClick
 } from '../../store/actions/analyticsActions';
 
@@ -17,24 +17,24 @@ class ProductsBanner extends Component {
         name: 'PLP: Homepage Products',
         id:'plp-homepage-products'
       },
-      productImpressionsFired: false
+      viewItemListFired: false
     }
-    this.handleProductImpressions = this.handleProductImpressions.bind(this);
+    this.handleViewItemList = this.handleViewItemList.bind(this);
     this.sendProductClick = this.sendProductClick.bind(this)
   }
   componentDidMount() {
     if(this.props.products.length > 0) {
-      this.handleProductImpressions();
+      this.handleViewItemList();
     }
   }
   componentDidUpdate(prevProps){
-    if(prevProps.products !== this.props.products && !this.state.productImpressionsFired){
-      this.handleProductImpressions();
+    if(prevProps.products !== this.props.products && !this.state.viewItemListFired){
+      this.handleViewItemList();
     }
   }
-  handleProductImpressions() {
-    this.props.dispatch(doProductImpressions(this.props.products.slice(0,4), this.state.list))
-      .then(() => this.setState({productImpressionsFired: true}));
+  handleViewItemList() {
+    this.props.dispatch(doViewItemList(this.props.products.slice(0,4), this.state.list))
+      .then(() => this.setState({viewItemListFired: true}));
   }
   sendProductClick(id, position) {
     const products = this.props.products.filter(prod => prod.id === id);

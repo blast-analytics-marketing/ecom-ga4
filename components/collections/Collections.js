@@ -4,7 +4,7 @@ import Head from 'next/head';
 import { connect } from 'react-redux';
 import ProductCard from '../products/ProductCard';
 import {
-  doProductImpressions,
+  doViewItemList,
   productClick
 } from '../../store/actions/analyticsActions';
 
@@ -13,7 +13,7 @@ class Collections extends Component {
     super(props);
     this.state = {
       concatProducts: [],
-      productImpressionsFired: false,
+      viewItemListFired: false,
       list: {
         name: 'PLP: Shop All',
         id: 'plp-shop-all'
@@ -24,20 +24,20 @@ class Collections extends Component {
     this.page = React.createRef();
 
     this.handleScroll = this.handleScroll.bind(this);
-    this.handleProductImpressions = this.handleProductImpressions.bind(this);
+    this.handleViewItemList = this.handleViewItemList.bind(this);
     this.sendProductClick = this.sendProductClick.bind(this);
   }
 
   componentDidMount() {
     window.addEventListener('scroll', this.handleScroll);
     if(this.props.products.length > 0) {
-      this.handleProductImpressions();
+      this.handleViewItemList();
     }
   }
 
   componentDidUpdate(prevProps){
-    if(prevProps.products !== this.props.products && !this.state.productImpressionsFired){
-      this.handleProductImpressions();
+    if(prevProps.products !== this.props.products && !this.state.viewItemListFired){
+      this.handleViewItemList();
     }
   }
 
@@ -65,14 +65,14 @@ class Collections extends Component {
     window.requestAnimationFrame(animate);
   }
 
-  handleProductImpressions() {
+  handleViewItemList() {
     this.setState({
       concatProducts: [].concat(...this.props.categories.map(({slug}) => {
         return this.filterProductsByCat(slug).map(prod => prod)
       }))
     }, () => {
-      this.props.dispatch(doProductImpressions(this.state.concatProducts, this.state.list))
-        .then(() => this.setState({productImpressionsFired: true}));
+      this.props.dispatch(doViewItemList(this.state.concatProducts, this.state.list))
+        .then(() => this.setState({viewItemListFired: true}));
     })
   }
 
