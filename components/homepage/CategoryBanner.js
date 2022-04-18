@@ -21,7 +21,7 @@ class CategoryBanner extends Component {
                 className="col-12 col-md-4 collection-item mb-5"
               >
                 <Link href={`/collection#${item.slug}`} key={item.id}>
-                  <a className="align-items-center font-color-black flex-column cursor-pointer mb-5" onClick={() => this.props.dispatchTrackSelectPromotion(item.id, item.name, item.meta.image, index+1)}>
+                  <a className="align-items-center font-color-black flex-column cursor-pointer mb-5" onClick={() => this.props.dispatchTrackSelectPromotion(item.id, item.name, item.meta.image, index+1, this.props.location)}>
                     <div>
                       { item.meta?.image && (
                         <div

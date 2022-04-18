@@ -80,7 +80,7 @@ class ExploreBanner extends React.Component {
                 <div className="d-flex">
                   <Link href="/collection">
                     <a className="d-flex py-3 align-items-center font-color-black borderbottom border-color-black"
-                      onClick={() => this.props.dispatchTrackSelectPromotion('explore-banner', 'Explore Banner', '/images/explore-banner.png', this.props.location)}>
+                      onClick={() => this.props.dispatchTrackSelectPromotion('explore-banner', 'Explore Banner', '/images/explore-banner.png', 'default', this.props.location)}>
                       <p className="mr-3">Explore products</p>
                       <img src="/icon/arrow-long-right.svg" />
                     </a>

@@ -16,7 +16,7 @@ function HomeBanner(props) {
         <Link href="/about">
           <a
             className="d-flex py-3 align-items-center font-color-black borderbottom border-color-black"
-            onClick={() => props.dispatchTrackSelectPromotion('about', 'About Link', 'none', 'below-hero')}>
+            onClick={() => props.dispatchTrackSelectPromotion('about', 'About Link', 'none', 'default', 'below-hero')}>
             <p className="mr-3">Find out more</p>
             <img src="/icon/arrow-long-right.svg" />
           </a>

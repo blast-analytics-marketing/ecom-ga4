@@ -86,7 +86,7 @@ class SocialMedia extends React.Component {
               <div className="d-flex">
                 <Link href="/about">
                   <a className="d-flex py-3 align-items-center font-color-black borderbottom border-color-black"
-                    onClick={() => this.props.dispatchTrackSelectPromotion('social-media', 'Follow Instagram', imagesInfo.map(({image}) => image).sort().join(), this.props.location)}>
+                    onClick={() => this.props.dispatchTrackSelectPromotion('social-media', 'Follow Instagram', imagesInfo.map(({image}) => image).sort().join(), 'default', this.props.location)}>
                     <p className="mr-3">Follow us</p>
                     <img src="/icon/arrow-long-right.svg" alt="Arrow icon"/>
                   </a>

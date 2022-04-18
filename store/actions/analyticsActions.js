@@ -429,13 +429,14 @@ export const trackPurchase = (products, orderReceipt) => {
 /**
  * Send the select promotion, promotion data
  */
-export const trackSelectPromotion = (promotion_id, promotion_name, creative_name, creative_slot) => {
+export const trackSelectPromotion = (promotion_id, promotion_name, creative_name, creative_slot, location_id) => {
   const ecomObj =  {
     items: [{
       promotion_id,
       promotion_name,
       creative_name,
       creative_slot,
+      location_id,
     }]
   };
   return {
