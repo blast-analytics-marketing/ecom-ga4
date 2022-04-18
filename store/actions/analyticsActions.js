@@ -53,7 +53,7 @@ export const productImpressions = (products, list) => {
       currency: 'USD',
       index,
       item_brand: "Blast",
-      item_price: parseFloat(price.formatted),
+      price: parseFloat(price.formatted),
       item_variant: `${variant_groups[0]?.name}: ${variant_groups[0]?.options[0]?.name}`,
       item_list_id: list.id,
       item_list_name: list.name,
@@ -102,7 +102,7 @@ export const productClick = (products, position, list) => {
       currency: 'USD',
       index: position,
       item_brand: "Blast",
-      item_price: parseFloat(price.formatted),
+      price: parseFloat(price.formatted),
       item_variant: `${variant_groups[0]?.name}: ${variant_groups[0]?.options[0]?.name}`,
       item_list_id: list.id,
       item_list_name: list.name,
@@ -132,7 +132,7 @@ export const productDetailView = (product) => {
     item_name: name,
     currency: 'USD',
     item_brand: "Blast",
-    item_price: parseFloat(price.formatted),
+    price: parseFloat(price.formatted),
     item_variant: `${variant_groups[0]?.name}: ${variant_groups[0]?.options[0]?.name}`,
   };
   categories.forEach((cat, i) => prod[i > 0 ? `item_category${i+1}` : 'item_category'] = cat.name);
@@ -167,31 +167,24 @@ export const trackAddToCart = (product, quantity, selected_options) => {
     variant = createVariantFromGroups(selected_options);
   }
   const ecomObj =  {
-    currencyCode: "USD",
-    add: {
-      products: [],
-    }
+    items: []
   };
-  ecomObj.add.products.push({
-    name,
-    id,
+  const prod = {
+    item_id: id,
+    item_name: name,
+    currency: 'USD',
+    item_brand: "Blast",
     price: parseFloat(price.formatted),
-    brand: "Blast",
-    category: categories.map(cat => cat.name).sort().join(','),
-    variant,
-    quantity,
-  });
+    item_variant: variant,
+    quantity
+  };
+  categories.forEach((cat, i) => prod[i > 0 ? `item_category${i+1}` : 'item_category'] = cat.name);
+  ecomObj.items.push(prod);
   return {
-    type: TRACK_ADD_TO_CART,
+    type: PRODUCT_DETAIL_VIEW,
     payload: {
-      event: "addToCart",
-      eventCategory: 'Enhanced Ecommerce',
-      eventAction: 'Add to Cart',
-      eventLabel: name,
-      nonInteractive: false,
+      event: "add_to_cart",
       ecommerce: ecomObj,
-      customMetrics: {},
-      customVariables: {},
     },
   }
 }
