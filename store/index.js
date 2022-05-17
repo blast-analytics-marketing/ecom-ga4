@@ -161,6 +161,8 @@ const analyticsMiddleware = () => next => action => {
         user: {
           user_id: payload.id,
           logged_in: payload.isLoggedIn,
+          user_firstname: payload.firstname,
+          user_lastname: payload.lastname
         },
         _clear: true,
       });
