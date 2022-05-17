@@ -187,7 +187,7 @@ class Header extends Component {
         >
           <div className="d-none d-sm-flex">
             <Link href="/collection">
-              <a className="mr-4 font-color-black" onClick={() => this.props.dispatchTrackNavigationClick('Shop')}>Shop</a>
+              <a className="mr-4 font-color-black" data-artemis="spa-navigation-click" onClick={() => this.props.dispatchTrackNavigationClick('Shop')}>Shop</a>
             </Link>
             <Link href="/about">
               <a className="font-color-black" onClick={() => this.props.dispatchTrackNavigationClick('About')}>About</a>

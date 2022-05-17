@@ -14,7 +14,7 @@ export default function Animation( props ) {
   };
 
   return (
-    <div className="cart-animation">
+    <div className="cart-animation" data-artemis="open-cart">
       <Lottie
         options={defaultOptions}
         height={32}

@@ -11,14 +11,6 @@ import { useRouter } from 'next/router'
 import { route } from 'next/dist/server/router';
 import { virtualPageView } from '../store/actions/analyticsActions';
 
-const gtmVirtualPageView = (rest) => {
-  window.dataLayer?.push({
-    event: 'virtualPageView',
-    _clear: true,
-    ...rest,
-  });
-};
-
 const MyApp = ({Component, pageProps}) => {
 
   const store = useStore(pageProps.initialState);

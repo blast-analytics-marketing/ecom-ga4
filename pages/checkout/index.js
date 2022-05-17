@@ -593,7 +593,7 @@ class CheckoutPage extends Component {
               {/* Breadcrumbs */}
               <div className="d-flex pb-4 breadcrumb-container">
                 <Link href="/collection">
-                  <a className="font-color-dark font-size-caption text-decoration-underline cursor-pointer">
+                  <a className="font-color-dark font-size-caption text-decoration-underline cursor-pointer" data-artemis="spa-navigation-click">
                     Cart
                   </a>
                 </Link>
@@ -685,6 +685,7 @@ class CheckoutPage extends Component {
                                 : ''
                               }
                               placeholder="Select a shipping method"
+                              data-artemis="select-shipping-option"
                             >
                               {
                                 shippingOptions && shippingOptions.map(option => (
@@ -765,6 +766,7 @@ class CheckoutPage extends Component {
                     <button
                       type="submit"
                       className="bg-black font-color-white w-100 border-none h-56 font-weight-semibold d-lg-block"
+                      data-artemis="make-payment"
                       disabled={!selectedShippingOption}
                     >
                       Make payment

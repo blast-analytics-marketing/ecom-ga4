@@ -137,14 +137,14 @@ class Cart extends Component {
                     <div className="row">
                       <div className="col-6 d-none d-md-block">
                         <Link href="/collection">
-                          <a className="h-56 d-flex align-items-center justify-content-center border border-color-black bg-white w-100 flex-grow-1 font-weight-medium font-color-black px-3">
+                          <a className="h-56 d-flex align-items-center justify-content-center border border-color-black bg-white w-100 flex-grow-1 font-weight-medium font-color-black px-3" data-artemis="spa-navigation-click">
                             Continue Shopping
                           </a>
                         </Link>
                       </div>
                       <div className="col-12 col-md-6">
                         <Link href="/checkout">
-                          <a className="h-56 d-flex align-items-center justify-content-center bg-black w-100 flex-grow-1 font-weight-medium font-color-white px-3">
+                          <a className="h-56 d-flex align-items-center justify-content-center bg-black w-100 flex-grow-1 font-weight-medium font-color-white px-3" data-artemis="spa-navigation-click">
                             Checkout
                           </a>
                         </Link>

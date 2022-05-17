@@ -4,7 +4,7 @@ import Link from 'next/link';
 export default function ProductCard({ permalink, image, id, name, description, price, soldOut, position, handleSelectItem}) {
   return (
     <Link href="/product/[permalink]" as={`/product/${permalink}`}>
-      <a className="mb-5 d-block font-color-black cursor-pointer" onClick={() => handleSelectItem(id, position)}>
+      <a className="mb-5 d-block font-color-black cursor-pointer" data-artemis="spa-navigation-click" onClick={() => handleSelectItem(id, position)}>
         <div
           className="mb-3"
           style={{

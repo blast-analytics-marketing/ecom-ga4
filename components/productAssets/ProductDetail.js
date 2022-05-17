@@ -153,6 +153,7 @@ class ProductDetail extends Component {
         {/* Add to Cart & Price */}
         <div className="d-flex py-4">
           <button onClick={this.handleAddToCart} disabled={soldOut}
+              data-artemis="add-to-cart"
               className="h-56 bg-black font-color-white pl-3 pr-4 d-flex align-items-center flex-grow-1" type="button">
             <span className="flex-grow-1 mr-3 text-center">
               { soldOut ? 'Sold out' : 'Add to cart' }
