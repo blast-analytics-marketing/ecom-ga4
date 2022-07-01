@@ -15,6 +15,7 @@ export default connect(({ categories }) => ({ categories }))(
           <li key={category.slug}>
             <Link href={`/collection#${category.slug}`}>
               <a
+                data-artemis="spa-navigation-click"
                 style={{ 'fontWeight': current === category.id && 'bold' }}
                 key={category.id} className="pb-2 cursor-pointer font-color-black"
               >

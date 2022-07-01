@@ -134,6 +134,9 @@ const analyticsMiddleware = () => next => action => {
     const dataLayer = window.dataLayer || [];
     dataLayer.push(...events);
     window.dataLayer = dataLayer;
+    const eventName = events[0].event;
+    const event = new Event(eventName);
+    document.dispatchEvent(event);
   };
   
   const { type, payload } = action;

@@ -17,7 +17,7 @@ const LoggedOut = () => (
               You have successfully logged out.
             </h2>
             <Link href="/" className="mt-4">
-              <a>Continue shopping</a>
+              <a data-artemis="spa-navigation-click">Continue shopping</a>
             </Link>
           </div>
         </div>

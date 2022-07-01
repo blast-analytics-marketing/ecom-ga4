@@ -52,6 +52,7 @@ class CartItem extends Component {
             <div className="d-flex align-items-center justify-content-between pt-2 pb-4">
               <div className="d-flex align-items-center">
                 <button className="p-0 bg-transparent"
+                  data-artemis="remove-from-cart"
                   onClick={() => item.quantity > 1
                     ? this.handleUpdateCartItem(item.id, item.product_id, item.quantity -1, item.quantity, item.selected_options)
                     : this.handleRemoveFromCart(item.id, item.product_id, item.quantity, item.selected_options)}>
@@ -59,11 +60,14 @@ class CartItem extends Component {
                 </button>
                 <p className="text-center px-3">{item.quantity}</p>
                 <button className="p-0 bg-transparent"
+                  data-artemis="add-to-cart"
                   onClick={() => this.handleUpdateCartItem(item.id, item.product_id, item.quantity +1, item.quantity, item.selected_options)}>
                   <img src="/icon/plus.svg" className="w-16" title="Plus icon" alt=""/>
                 </button>
               </div>
-              <p className="text-right text-decoration-underline font-color-medium cursor-pointer"
+              <p
+                data-artemis="remove-from-cart"
+                className="text-right text-decoration-underline font-color-medium cursor-pointer"
                 onClick={() => this.handleRemoveFromCart(item.id, item.product_id, item.quantity, item.selected_options)}>
                 Remove
               </p>

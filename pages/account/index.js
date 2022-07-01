@@ -200,7 +200,7 @@ class CustomerAccountPage extends Component {
               <td>
                 <div>
                   <Link href={`account/${order.id}`}>
-                    <a>#{ order.customer_reference }</a>
+                    <a data-artemis="spa-navigation-click">#{ order.customer_reference }</a>
                   </Link>
                 </div>
                 <small className="text-muted">{ this.formatDate(order.created) }</small>
@@ -214,7 +214,7 @@ class CustomerAccountPage extends Component {
               <td>{ order.order_value.formatted_with_symbol }</td>
               <td>
                 <Link href={`account/${order.id}`}>
-                  <a>View order</a>
+                  <a data-artemis="spa-navigation-click">View order</a>
                 </Link>
               </td>
             </tr>

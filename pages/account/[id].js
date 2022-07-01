@@ -181,7 +181,7 @@ export default function SingleOrderPage() {
                 {/* Breadcrumbs */}
                 <div className="d-flex pb-4 breadcrumb-container">
                   <Link href="/account">
-                    <a className="font-size-caption text-decoration-underline cursor-pointer font-color-black">
+                    <a className="font-size-caption text-decoration-underline cursor-pointer font-color-black" data-artemis="spa-navigation-click">
                       Account
                     </a>
                   </Link>

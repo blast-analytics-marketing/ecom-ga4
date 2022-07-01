@@ -48,6 +48,7 @@ function HeroSection(props) {
               <Link href="/collection">
                 <a
                   className="d-flex align-items-center bg-transparent border border-color-white h-56 px-5 font-color-white hero-btn"
+                  data-artemis="spa-navigation-click"
                   onClick={() => props.dispatchTrackSelectPromotion(`home-${index+1}`, `Home ${index+1}`, image, index+1, 'hero-section')}>
                   Shop now
                 </a>

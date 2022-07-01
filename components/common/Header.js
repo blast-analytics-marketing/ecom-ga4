@@ -148,7 +148,7 @@ class Header extends Component {
             </span>
           ) }
           <Link href="/account">
-            <a className="font-color-black mx-2" onClick={() => this.props.dispatchTrackNavigationClick('My Account')}>
+            <a className="font-color-black mx-2" data-artemis="spa-navigation-click" onClick={() => this.props.dispatchTrackNavigationClick('My Account')}>
               My account
             </a>
           </Link>
@@ -165,7 +165,7 @@ class Header extends Component {
 
     return (
       <Link href="/login">
-        <a className="font-color-black login" onClick={() => this.props.dispatchTrackNavigationClick('Login')}>
+        <a className="font-color-black login" data-artemis="spa-navigation-click" onClick={() => this.props.dispatchTrackNavigationClick('Login')}>
           Login
         </a>
       </Link>
@@ -178,7 +178,7 @@ class Header extends Component {
 
     return (
       <header className="position-fixed top-0 left-0 right-0 font-weight-semibold no-print">
-        <Cart isOpen={showCart} toggle={value => this.toggleCart(value)} />
+        <Cart isOpen={showCart} toggle={value => this.toggleCart(value)}/>
         <div
           ref={this.header}
           className={`d-flex header align-items-center justify-content-between position-relative ${
@@ -190,7 +190,7 @@ class Header extends Component {
               <a className="mr-4 font-color-black" data-artemis="spa-navigation-click" onClick={() => this.props.dispatchTrackNavigationClick('Shop')}>Shop</a>
             </Link>
             <Link href="/about">
-              <a className="font-color-black" onClick={() => this.props.dispatchTrackNavigationClick('About')}>About</a>
+              <a className="font-color-black" data-artemis="spa-navigation-click" onClick={() => this.props.dispatchTrackNavigationClick('About')}>About</a>
             </Link>
           </div>
           <div className="logo-container">
@@ -201,7 +201,7 @@ class Header extends Component {
               alt="Menu icon"
             />
             <Link href="/">
-              <a onClick={() => this.props.dispatchTrackNavigationClick('Logo')}>
+              <a data-artemis="spa-navigation-click" onClick={() => this.props.dispatchTrackNavigationClick('Logo')}>
                 <img
                   src="/images/commerce.svg"
                   className="logo cursor-pointer"
@@ -245,7 +245,7 @@ class Header extends Component {
               >
                 {mobileMenuLinks.map((item, i) => (
                   <Link key={i} href={item.link}>
-                    <a className="d-block mb-4 font-size-heading font-color-white text-center" onClick={() => this.props.dispatchTrackNavigationClick(item.name)}>
+                    <a className="d-block mb-4 font-size-heading font-color-white text-center" data-artemis="spa-navigation-click" onClick={() => this.props.dispatchTrackNavigationClick(item.name)}>
                       {item.name}
                     </a>
                   </Link>

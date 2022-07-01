@@ -94,7 +94,7 @@ class Collections extends Component {
                   {category.name}
                 </p>
                 <Link href={`/collection#${category.slug}`}>
-                  <a className="mb-5 font-color-black">
+                  <a className="mb-5 font-color-black" data-artemis="spa-navigation-click">
                     <div className="d-flex">
                       <p className="mb-2 position-relative cursor-pointer">
                         Products
