@@ -7,3 +7,7 @@
 
 [template.environment]
   NEXT_PUBLIC_CHEC_PUBLIC_KEY = "Chec Public Key (under Setup > Developer)"
+
+[[edge_functions]]
+path = "/test"
+function = "hello"
