@@ -31,6 +31,6 @@ export default async (request: Request, context: Context) => {
   
     // Replace the content
     const pricingContent = context.geo.city;
-    const updatedPage = page.replace(regex, pricingContent);
+    const updatedPage = page.replace(regex, pricingContent!);
     return new Response(updatedPage, response);
 };
