@@ -30,6 +30,7 @@ function HeroSection(props) {
   SwiperCore.use([Autoplay, EffectFade]);
   return (
     <div className="hero-section position-relative">
+      <p>INCLUDE_PRICE_INFO</p>
       <Swiper {...params}>
         {images.map((image, index) => (
           <SwiperSlide key={image}>

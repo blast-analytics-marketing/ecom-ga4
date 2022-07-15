@@ -9,5 +9,10 @@
   NEXT_PUBLIC_CHEC_PUBLIC_KEY = "Chec Public Key (under Setup > Developer)"
 
 [[edge_functions]]
-path = "/test"
-function = "hello"
+  path = "/test"
+  function = "hello"
+
+[[edge_functions]]
+  path = "/*"
+  function = "geolocation"
+
