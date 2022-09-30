@@ -143,6 +143,9 @@ const analyticsMiddleware = () => next => action => {
 
   switch(type) {
     case "VIRTUAL_PAGE_VIEW":
+      sendEvents({...{page: null}});
+      sendEvents({...payload});
+      break;
     case "TRACK_VIEW_ITEM_LIST":
     case "TRACK_SELECT_ITEM":
     case "TRACK_VIEW_ITEM":
@@ -154,33 +157,27 @@ const analyticsMiddleware = () => next => action => {
     case "TRACK_ADD_PAYMENT_INFO":
     case "TRACK_PURCHASE":
     case "TRACK_SELECT_PROMOTION":
+      sendEvents({...{ecommerce: null}});
+      sendEvents({...payload});
+      break;
     case "TRACK_NAVIGATION_CLICK":
     case "TRACK_LOGIN":
-      sendEvents({...payload, _clear: true});
+      sendEvents({...payload});
       break;
     case "SET_CUSTOMER":
+      sendEvents({...{user: null}});
       sendEvents({
         event: "load_user_data",
         user: {
           user_id: payload.id,
           logged_in: payload.isLoggedIn,
-          firstname: payload.firstname,
-          lastname: payload.lastname
-        },
-        _clear: true,
+        }
       });
       break;
     case "CLEAR_CUSTOMER":
-      sendEvents({
-        event: "load_user_data",
-        user: {
-          logged_in: false,
-        },
-        _clear: true,
-      });
+      sendEvents({...{user: null}});
       break;
     default:
-      //sendEvents({event: type, payload, _clear: true});
       break;
   }
 
